@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dell.Lead.WeApi.Models
 {
+    //
     [Table("Contributors")]
     public class Contributors : BaseEntity
     {

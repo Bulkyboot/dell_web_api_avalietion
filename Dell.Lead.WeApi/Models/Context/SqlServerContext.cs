@@ -2,6 +2,7 @@
 
 namespace Dell.Lead.WeApi.Models.Context
 {
+    //
     public class SqlServerContext : DbContext
     {
         public SqlServerContext() { }
