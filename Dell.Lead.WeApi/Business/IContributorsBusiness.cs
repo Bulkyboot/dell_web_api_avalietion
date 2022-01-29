@@ -5,6 +5,7 @@ namespace Dell.Lead.WeApi.Business
 {
     public interface IContributorsBusiness
     {
+        //
         ContributorsVO FindByCpf(long cpf);
         List<ContributorsVO> FindAll();
         ContributorsVO Create(ContributorsVO contributors);
