@@ -2,6 +2,7 @@
 
 namespace Dell.Lead.WeApi.Data.Converter.Contract
 {
+    //
     public interface IParse<D, O>
     {
         D Parse(O origin);

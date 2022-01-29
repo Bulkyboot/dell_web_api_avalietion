@@ -1,5 +1,6 @@
 ﻿namespace Dell.Lead.WeApi.Data.VO
 {
+    //
     public class TokenVO
     {
         public bool Authenticated { get; set; }

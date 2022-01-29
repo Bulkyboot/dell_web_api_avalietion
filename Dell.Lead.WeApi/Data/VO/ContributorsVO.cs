@@ -20,7 +20,7 @@ namespace Dell.Lead.WeApi.Data.VO
         /// </summary>
         public long Cpf { get; set; }
         /// <summary>
-        /// Date of birth
+        /// Date of dateofbirth
         /// </summary>
 
         public DateTime DateOfBirth { get; set; }
