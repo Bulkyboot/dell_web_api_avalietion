@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Dell.Lead.WeApi.Repositories
 {
+    //
     public interface IContributorsRepository
     {
         Contributors FindByCpf(long cpf);

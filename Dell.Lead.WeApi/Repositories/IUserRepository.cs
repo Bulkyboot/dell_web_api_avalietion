@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace Dell.Lead.WeApi.Repositories
 {
-    //have metods for user
+    //
     public interface IUserRepository
     {
         User Create(User user);

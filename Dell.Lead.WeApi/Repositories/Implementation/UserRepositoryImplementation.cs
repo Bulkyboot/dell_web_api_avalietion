@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Dell.Lead.WeApi.Repositories.Implementation
 {
-    //All metods
+    //
     public class UserRepositoryImplementation : IUserRepository
     {
         private readonly SqlServerContext _context;

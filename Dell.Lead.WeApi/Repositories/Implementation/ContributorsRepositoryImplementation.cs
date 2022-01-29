@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Dell.Lead.WeApi.Repositories.Implementation
 {
+    //
     public class ContributorsRepositoryImplementation : IContributorsRepository
     {
         private readonly SqlServerContext _context;
