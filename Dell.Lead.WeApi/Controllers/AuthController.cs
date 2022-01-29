@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dell.Lead.WeApi.Controllers
 {
+    //
     [ApiVersion("1")]
     [ApiController]
     [Route("api/v{version:apiVersion}/auth")]
