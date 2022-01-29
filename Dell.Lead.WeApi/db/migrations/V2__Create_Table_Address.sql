@@ -7,3 +7,4 @@
     city VARCHAR(40) NOT NULL,
     state VARCHAR(30) NOT NULL
 );
+//
