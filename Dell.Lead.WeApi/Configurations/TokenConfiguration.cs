@@ -1,5 +1,6 @@
 ﻿namespace Dell.Lead.WeApi.Configurations
 {
+    //
     public class TokenConfiguration
     {
         public string Audience { get; set; }

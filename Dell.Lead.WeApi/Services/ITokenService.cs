@@ -3,6 +3,7 @@ using System.Security.Claims;
 
 namespace Dell.Lead.WeApi.Services
 {
+    //
     public interface ITokenService
     {
         string GenerateAcessToken(IEnumerable<Claim> claims);
