@@ -7,4 +7,3 @@
 	gender VARCHAR(30) NOT NULL,
 	address_id BIGINT NOT NULL
 );
-//

@@ -6,4 +6,3 @@
 	refresh_token VARCHAR(500),
 	refresh_token_expiry_time DATETIME NULL DEFAULT NULL
 );
-//

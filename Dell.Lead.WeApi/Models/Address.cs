@@ -20,7 +20,7 @@ namespace Dell.Lead.WeApi.Models
         public string State { get; set; }
         [Column("cep")]
         public long Cep { get; set; }
-        [Column("employee")]
+        [Column("contributors")]
         public Contributors Contributors { get; set; }
     }
 }

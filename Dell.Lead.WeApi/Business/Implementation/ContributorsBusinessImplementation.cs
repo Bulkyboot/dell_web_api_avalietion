@@ -30,7 +30,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
             }
             else
             {
-                Console.WriteLine("The item has already been registered");
+                Console.WriteLine("This item has already been registered");
             }
         }
 
