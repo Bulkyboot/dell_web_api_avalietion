@@ -170,8 +170,8 @@ namespace Dell.Lead.WeApi.Controllers
         public ActionResult Put([FromBody] ContributorsVO contributors)
         {
             if (contributors == null) return BadRequest("Funcionário inválido");
-                var changerEmployee = _contributorsBusiness.Update(contributors);
-                return Ok(changerEmployee);
+                var newContributors = _contributorsBusiness.Update(contributors);
+                return Ok(newContributors);
             
         }
 

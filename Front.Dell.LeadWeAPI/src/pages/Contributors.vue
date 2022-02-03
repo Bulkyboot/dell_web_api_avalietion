@@ -19,46 +19,41 @@
         <template #content> 
           <div class="content-filter">
             <span class="p-field">
-              <h5>name</h5>
+              <h5>Name</h5>
               <InputText id="name" type="text" v-model="name" disabled />
             </span>
             <span class="p-field">
-              <h5>cpf</h5>
-              <InputNumber id="cpf" type="text" v-model="cpf" />
+              <h5>Cpf</h5>
+              <InputNumber id="Cpf" type="text" v-model="Cpf" />
             </span>
-            <span class="p-field">
-              <h5>DateOfBirth</h5>
-              <InputNumber id="dateOfBirth" v-model="DateOfBirth" />
+           <span class="p-field">
+              <h5>Cellfone</h5>
+              <InputNumber id="Cellfone" type="text" v-model="Cellfone" disabled />
             </span>
-            <span class="p-field">
-              <h5>cellfone</h5>
-                <InputNumber id="cellfone" v-model="cellfone" />
+             <span class="p-field">
+              <h5>Gender</h5>
+              <InputText id="Gender" type="text" v-model="Gender" disabled />
             </span>
-            <span class="p-field">
-              <h5>gener</h5>
-                <InputText id="gener" v-model="gener"/>
-            </span>
-            <span class="p-field">
-              <h5>andress</h5>
+              <h5>Address</h5>
               <!--<Dropdown 
-                v-model="selectedandress" 
-                :options="optionsandresss" 
+                v-model="selectedAuthor" 
+                :options="optionsAuthors" 
                 optionLabel="name"  
-                placeholder="Select a andress" 
+                placeholder="Select a Author" 
               />-->
               <Dropdown 
-								v-model="selectedandress" 
-								:options="optionsandress" 
-								optionLabel="Cep" 
+								v-model="selectedAddress" 
+								:options="optionsAddress" 
+								optionLabel="name" 
 								:filter="true" 
-								placeholder="Select a Contrubutirs" 
+								placeholder="Select a Address" 
 								:showClear="true"
 							>
 								<template #value="slotProps">
 									<div class="country-item country-item-value" v-if="slotProps.value">
 										<div>{{slotProps.value.name}}</div>
 									</div>
-									<span v-else>
+								<span v-else>
 										{{slotProps.placeholder}}
 									</span>
 								</template>
@@ -79,15 +74,43 @@
     </div>
     
     <div class="d-datatable">
-      <DataTable :value="Contributors" :scrollable="true" scrollHeight="400px" responsiveLayout="scroll">
-        <Column field="id" header="ID"></Column>
-        <Column field="title" header="Title"></Column>
-        <Column field="price" header="Price"></Column>
+      <DataTable 
+        :value="Contributors" 
+        :scrollable="true" 
+        scrollHeight="400px" 
+        responsiveLayout="scroll"
+        filterDisplay="menu"
+        v-model:filters="filters"
+      >
+        <Column field="id" header="ID" :sortable="true"></Column>
+        <Column 
+          field="title" 
+          filterField="title"
+          :sortable="true" 
+          :showFilterMatchModes="false"
+          header="Title"
+        >
+          <template #filter="{filterModel}">
+              <div class="mb-3 font-bold">Cpf</div>
+              <InputText v-model="filterModel.value"/>
+          </template>
+        </Column>
+        <Column 
+          field="cpf" 
+          header="cof"
+          filterField="cpf" 
+          :showFilterMatchModes="false"  
+        >
+          <template #filter="{filterModel}">
+              <div class="mb-3 font-bold">Price</div>
+              <InputText v-model="filterModel.value"/>
+          </template>
+        </Column>
         <Column field="author.name" header="Author"></Column>
         <Column :exportable="false">
           <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="editBook(slotProps.data)" />
-            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteBook(slotProps.data.id)" />
+            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="editContributors(slotProps.data)" />
+            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteContributors(slotProps.data.id)" />
           </template>
         </Column>
         <template #empty>
@@ -99,35 +122,43 @@
 </template>
 
 <script>
-import Contributor from '../services/BookService';
-import AuthorService from '../services/AuthorService';
-
+import { FilterMatchMode } from 'primevue/api';
+import ContributorsService from '../services/ContributorsService';
+import AddressService from '../services/AddressService';
 export default {
-  name: 'Book',
+  name: 'Contributors',
   data() {
     return {
-      book: null,
+      Contributors: null,
       id: null,
-      title: '',
-      price: null,
-      books: [],
-      optionsAuthors: [],
-      selectedAuthor:null,
+      name: '',
+      cpf: null,
+      Contributors: [],
+      optionsAddress: [],
+      selectedAddress:null,
       isSave: true,
-      displayConfirmation: false
+      displayConfirmation: false,
+      filters: []
     }
   },
   bookService: null,
   authorService: null,
   created() {
-    this.bookService = new BookService();
-    this.authorService = new AuthorService();
+    this.ContributorsService = new ContributorsService();
+    this.AddressService = new AddressService();
+    this.filters = this.initFilters();
   },
   async mounted() {
-    await this.requestGetAuthors();
-    await this.requestGetBooks();
+    await this.requestGetAddress();
+    await this.requestGetContributors();
   },
   methods: {
+    initFilters() {
+      return {
+        'Name': { value: null, matchMode: FilterMatchMode.CONTAINS },
+        'Cpf': { value: null, matchMode: FilterMatchMode.CONTAINS },
+      };
+    },
     showSuccess() {
         this.$toast.add({severity:'success', summary: 'Success Message', detail:'Message Content', life: 3000});
     },
@@ -135,39 +166,39 @@ export default {
         this.$toast.add({severity:'error', summary: 'Error Message', detail:'Message Content', life: 3000});
     },
     async save() {
-      let book = {
-        'title': this.title,
-        'price': this.price
+      let contributors = {
+        'name': this.name,
+        'cpf': this.cpf
       };
-      if(this.selectedAuthor) {
-        book.author = {
-          'id': this.selectedAuthor.id
+      if(this.selectedAddress) {
+        contributors.address = {
+          'id': this.selectedAddress.id
         };
       }
-      await this.requestPostBook(book);
+      await this.requestPostBook(contributors);
       this.clearField();
     },
     async update() {
-      let book = {
-        'title': this.title,
-        'price': this.price
+     let contributors = {
+        'name': this.name,
+        'cpf': this.cpf
       };
-      if(this.selectedAuthor) {
-        book.author = {
-          'id': this.selectedAuthor.id
+      if(this.selectedAddress) {
+        contributors.andress = {
+          'id': this.selectedAddress.id
         };
       }
-      await this.requestPutBook(this.id, book);
+      await this.requestPutContributos(this.id, contributors);
       this.clearField();
       this.isSave = true;
     },
-    async deleteBook(){
-      await this.requestDeleteBook(this.id);
+    async deleteContributos(){
+      await this.requestDeleteContributos(this.id);
       this.displayConfirmation = false;
       this.clearField();
       this.isSave = true;
     },
-    cancelBook() {
+    cancelContributos() {
       this.id= null;
       this.displayConfirmation = false;
       this.clearField();
@@ -175,85 +206,85 @@ export default {
     },
     clearField() {
       this.id = null,
-      this.title = '',
-      this.price = null,
-      this.selectedAuthor = null
+      this.name = '',
+      this.cpf = null,
+      this.selectedAddress = null
     },
-    editBook(data) {
-      this.title = data.title;
-      this.price = data.price;
+    editContributos(data) {
+      this.name = data.name;
+      this.cpf = data.cpf;
       this.id = data.id;
       let author = {...data.author};
       if(author.name !== '-') {
-        this.selectedAuthor = {
-            id: author.id,
-            name: author.name    
+        this.selectedAddress = {
+            id: andress.id,
+            name: address.name    
         };
       } else {
-          this.selectedAuthor = null;
+          this.selectedAddress = null;
       }
       this.isSave = false;
     },
-    confirmDeleteBook(value) {
+    confirmDeleteContributos(value) {
       this.id = value;
       this.displayConfirmation = true;
     },
-    async requestGetBooks() {
-      await this.bookService.getBooks()
+    async requestGetContributos() {
+      await this.ContributosService.getContributos()
         .then(response => {
           let data = response.data;
-          this.books = [];
-          data.forEach(book => {
-            let bookLocal = {...book};
-            bookLocal.author =  bookLocal.author ? bookLocal.author : { name: '-'};
-            this.books.push({...bookLocal});
+          this.Contributos = [];
+          data.forEach(Contributos => {
+            let ContributosLocal = {...Contributos};
+            ContributosLocal.address =  ContributosLocal.address ? ContributosLocal.address : { name: '-'};
+            this.Contributos.push({...ContributosLocal});
           });
         })
         .catch(() => {
           console.log('Ocorreu um erro!');
         });
     },
-    async requestGetAuthors() {
-      await this.authorService.getAuthors()
+    async requestGetContributos() {
+      await this.ContributosService.getContributos()
         .then(response => {
           let data = response.data;
-          data.forEach(author => {
-            this.optionsAuthors = [];
-            this.optionsAuthors.push({
-              id: author.id,
-              name: author.name
+          this.optionsAddress = [];
+          data.forEach(address => {
+            this.optionsAddress.push({
+              id: address.id,
+              name: address.name
             })
           });
         })
         .catch(() => {
-          this.optionsAuthors=[];
+          this.optionsAddress=[];
           this.showError();
         })
     },
-    async requestPostBook(book = {}) {
-      await this.bookService.postBooks(book)
+    async requestPostcontributors(contributors = {}) {
+      await this.contributorsService.postcontributors(contributors)
         .then(() => {
-          this.requestGetBooks();
+          this.requestGetcontributors();
           this.showSuccess();
         })
         .catch(error => {
-          this.$toast.add({severity:'error', summary: 'Error Register', detail:`${error.response.data.title}`, life: 3000});
+          this.$toast.add({severity:'error', summary: 'Error Register', detail:`${error.response.data.name}`, life: 3000});
         })
     },
-    async requestPutBook(bookId, book = {}) {
-      await this.bookService.putBooks(bookId, book)
+    async requestPutBook(contributorsId, contributors = {}) {
+      await this.contributorsService.putcontributors(contributorsId, contributors)
         .then(() => {
-          this.requestGetBooks();
+          this.requestGetcontributors();
           this.showSuccess();
         })
         .catch(() => {
           this.showError();
         })
     },
-    async requestDeleteBook(bookId) {
-      await this.bookService.deleteBooks(bookId)
+    async requestDeletecontributors(contributorsId) {
+      await this.contributorsService.deleteBooks(contributorsId)
         .then(() => {
-          this.requestGetBooks();
+          this.requestGetcontributors();
           this.showSuccess();
         })
         .catch(() => {
@@ -262,5 +293,4 @@ export default {
     }
   }
 }
-
 </script>

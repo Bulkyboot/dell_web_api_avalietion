@@ -50,14 +50,14 @@ namespace Dell.Lead.WeApi.Business.Implementation
             if (findEmployee == null) throw new ExistCpfException("don't exist contributors in CPF");
             return _converter.Parse(findEmployee);
         }
-        public ContributorsVO Update(ContributorsVO contributors)
+        public ContributorsVO Update(ContributorsVO contributorsVO)
         {
-            var contributorsConverter = _converter.Parse(contributors);
-            contributorsConverter.AddressId = contributors.Address.Id;
-            if (FindByCpf(contributorsConverter.Cpf) != null)
+            var contributors = _converter.Parse(contributorsVO);
+            contributors.AddressId = contributorsVO.Address.Id;
+            if (FindByCpf(contributors.Cpf) != null)
             {
-                contributorsConverter = _Repository.Update(contributorsConverter);
-                return _converter.Parse(contributorsConverter);
+                contributors = _Repository.Update(contributors);
+                return _converter.Parse(contributors);
             }
             return null;
         }

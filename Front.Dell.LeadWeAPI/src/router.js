@@ -9,14 +9,14 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/books',
-		name: 'Books',
-		component: () => import('./pages/Book.vue')
+		path: '/Contributors',
+		name: 'Contributors',
+		component: () => import('./pages/Contributors.vue')
 	},
 	{
-		path: '/authors',
-		name: 'Authors',
-		component: () => import('./pages/Author.vue')
+		path: '/Address',
+		name: 'Address',
+		component: () => import('./pages/Address.vue')
 	},
 ];
 

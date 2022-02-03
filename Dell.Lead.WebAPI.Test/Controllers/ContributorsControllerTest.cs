@@ -208,9 +208,9 @@ namespace Dell.Lead.WeApi.Test.Controllers
 
             var contributorsController = contributorsControllers(_mockContributorsBusiness);
             ActionResult<ContributorsVO> response = contributorsController.Create(contributorsVO);
-            CreatedAtActionResult result = (CreatedAtActionResult)response.Result;
+            OkObjectResult result = (OkObjectResult)response.Result;
 
-            Assert.Equal(201, result.StatusCode);
+            Assert.Equal(200, result.StatusCode);
             Assert.Equal(contributorsVO, result.Value);
         }
 

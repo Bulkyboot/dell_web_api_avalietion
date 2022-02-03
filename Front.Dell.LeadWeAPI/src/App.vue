@@ -7,29 +7,29 @@
     </Menubar>
   </div>
   <router-view />
-  <!--<template v-if="isBook">
-    <Book />
+  <!--<template v-if="isContributors">
+    <Contributors />
   </template>
   <template v-else>
-    <Author />
+    <Address />
   </template>-->
 </template>
 
 <script>
-//import Book from './pages/Book.vue';
+//import Contributors from './pages/Contributors.vue';
 import items from './data/menu';
-//import Author from './pages/Author.vue';
+//import Address from './pages/Address.vue';
 
   export default {
     name: 'App',
     // components: {
-    //   Book//,
-    //   //Author
+    //   Contributors//,
+    //   //Address
     // },
     data() {
       return {
         items,
-        isBook: false
+        isContributors: false
       }
     }
   }
