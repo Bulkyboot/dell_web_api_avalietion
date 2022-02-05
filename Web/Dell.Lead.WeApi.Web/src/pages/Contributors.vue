@@ -277,6 +277,16 @@ export default {
     this.displayConfirmation = false;
     this.clearField();
     this.isSave = true;
-     }
-  }
+     },
+     async cancelContributors() {
+    this.cpf= null;
+    this.displayConfirmation = false;
+    this.clearField();
+    this.isSave = true;
+  },
+  async confirmDeleteContributors(value) {
+    this.cpf = value;
+    this.displayConfirmation = true;
+   }
+}
 </script>
