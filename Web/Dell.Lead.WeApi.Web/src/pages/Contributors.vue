@@ -52,7 +52,7 @@
             </span>
             <span class="p-field">
               <h5>District</h5>
-              <InputText id="district" type="text" v-model="District" />
+              <InputText id="district" type="text" v-model="district" />
             </span>
             <span class="p-field">
               <h5>City</h5>
@@ -145,7 +145,7 @@ export default {
       name: '',
       cpf: null,
       date_of_birth: '',
-      phone: null,
+      cellfone: null,
       gender: '',
       isSave: true,
       Address: [],
@@ -189,7 +189,7 @@ export default {
         });
       })
       .catch(() => {
-        console.log('Ocorreu um erro!');
+        console.log('Have one Mistake!');
       });
   },
   async requestGetViaCep(cep){
@@ -204,9 +204,28 @@ export default {
         };
       })
       .catch(() => {
-        console.log('Ocorreu um erro!')
+        console.log('Have one Mistake!')
       });
-  }
+  },
+  async save(cpf){
+  let contributors = {
+      'name': this.name,
+      'cpf': this.cpf,
+      'date_of_birth': this.date_of_birth,
+      'cellfone': this.phone,
+      'gender': this.gender,
+    };
+    employee.Address = {
+      'street': this.viaCep.street,
+      'district': this.viaCep.district,
+      'city': this.viaCep.city,
+      'state': this.viaCep.state,
+      'number': this.number,
+      'cep': this.cep
+      };
+      this.clearField();
+      await this.requestPostEmployee(contributors);
+  },
   }
 }
 </script>
