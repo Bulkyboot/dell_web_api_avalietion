@@ -212,7 +212,7 @@ export default {
       'name': this.name,
       'cpf': this.cpf,
       'date_of_birth': this.date_of_birth,
-      'cellfone': this.phone,
+      'cellfone': this.cellfone,
       'gender': this.gender,
     };
     employee.Address = {
@@ -247,6 +247,17 @@ export default {
         .catch(() => {
           this.showError();
         });
+    },
+    async put(){
+      let contributors = {
+      'code': this.id, 
+      'name': this.name,
+      'cpf': this.cpf,
+      'date_of_birth': this.date_of_birth,
+      'cellfone': this.cellfone,
+      'gender': this.gender,
+    };
+
     }
   }
 }
