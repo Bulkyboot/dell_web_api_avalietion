@@ -224,8 +224,20 @@ export default {
       'cep': this.cep
       };
       this.clearField();
-      await this.requestPostEmployee(contributors);
+      await this.requestPostContributors(contributors);
   },
+   async requestGetViaCep(cep){
+    await this.viaCepService.getViaCep(cep)
+      .then(response => {
+        let data = {...response.data};
+        this.viaCep = {
+          city: data.localidade,
+          district: data.bairro,
+          street: data.logradouro,
+          state: data.uf
+        };
+      })
+    }
   }
 }
 </script>
