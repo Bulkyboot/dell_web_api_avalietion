@@ -207,7 +207,21 @@ export default {
         console.log('Have one Mistake!')
       });
   },
-  async save(cpf){
+      async clearField() {
+      this.cpf = null,
+      this.name = '',
+      this.date_of_birth = '',
+      this.cellfone = null,
+      this.gender = '',
+      this.number = null,
+      this.cep = null,
+      this.viaCep.street = '',
+      this.viaCep.district = '',
+      this.viaCep.city = '',
+      this.viaCep.state = ''
+    }
+  },
+  async save(){
   let contributors = {
       'name': this.name,
       'cpf': this.cpf,
@@ -215,7 +229,7 @@ export default {
       'cellfone': this.cellfone,
       'gender': this.gender,
     };
-    employee.Address = {
+    contributors.Address = {
       'street': this.viaCep.street,
       'district': this.viaCep.district,
       'city': this.viaCep.city,
@@ -258,19 +272,11 @@ export default {
       'gender': this.gender,
       };
     },
-    async clearField() {
-      this.cpf = null,
-      this.name = '',
-      this.date_of_birth = '',
-      this.cellfone = null,
-      this.gender = '',
-      this.number = null,
-      this.cep = null,
-      this.viaCep.street = '',
-      this.viaCep.district = '',
-      this.viaCep.city = '',
-      this.viaCep.state = ''
-    }
+     async deleteContributors(){
+    await this.requestDeleteContributors(this.cpf);
+    this.displayConfirmation = false;
+    this.clearField();
+    this.isSave = true;
+     }
   }
-}
 </script>
