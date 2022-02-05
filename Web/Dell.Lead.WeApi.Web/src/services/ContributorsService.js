@@ -14,4 +14,5 @@ export default class ContributorsServices {
     return axios.delete(
       `https://localhost:44373/api/v1/contributors/${contributorsCpf}`
     )
+  }
 }
