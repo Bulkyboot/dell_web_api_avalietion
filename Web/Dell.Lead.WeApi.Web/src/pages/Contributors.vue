@@ -144,7 +144,7 @@ export default {
       id: null,
       name: '',
       cpf: null,
-      birth_date: '',
+      date_of_birth: '',
       phone: null,
       gender: '',
       isSave: true,
