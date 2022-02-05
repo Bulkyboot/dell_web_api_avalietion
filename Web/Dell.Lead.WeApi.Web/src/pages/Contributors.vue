@@ -256,8 +256,20 @@ export default {
       'date_of_birth': this.date_of_birth,
       'cellfone': this.cellfone,
       'gender': this.gender,
-    };
-
+      };
+    },
+    async clearField() {
+      this.cpf = null,
+      this.name = '',
+      this.date_of_birth = '',
+      this.cellfone = null,
+      this.gender = '',
+      this.number = null,
+      this.cep = null,
+      this.viaCep.street = '',
+      this.viaCep.district = '',
+      this.viaCep.city = '',
+      this.viaCep.state = ''
     }
   }
 }
