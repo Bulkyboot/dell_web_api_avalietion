@@ -237,6 +237,16 @@ export default {
           state: data.uf
         };
       })
+    },
+     async requestPutContributors(Contributors = {}){
+      await this.ContributorsService.putContributors(Contributors)
+        .then(() => {
+          this.requestGetContributors();
+          this.showSuccess();
+        })
+        .catch(() => {
+          this.showError();
+        });
     }
   }
 }
